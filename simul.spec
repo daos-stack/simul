@@ -37,10 +37,10 @@ and coherence of parallel filesystems.
 %if %{with_mpich}
 %package mpich
 Summary: MACSio for MPICH
-%if %{_host_vendor} == suse
+%if "%{_host_vendor}" == "suse"
 BuildRequires: mpich-devel%{?_isa} lua-lmod
 %endif
-%if %{_host_vendor} == redhat
+%if "%{_host_vendor}" == "redhat"
 BuildRequires: mpich-devel%{?_isa}
 %endif
 Requires: %{name}%{?_isa} = %{version}-%{release}
@@ -53,10 +53,10 @@ Simul for MPICH
 %if %{with_openmpi3}
 %package openmpi3
 Summary: Simul for OpenMPI 3
-%if %{_host_vendor} == suse
+%if "%{_host_vendor}" == "suse"
 BuildRequires: openmpi3-devel%{?_isa} lua-lmod
 %endif
-%if %{_host_vendor} == redhat
+%if "%{_host_vendor}" == "redhat"
 BuildRequires: openmpi3-devel%{?_isa}
 %endif
 Requires: %{name}%{?_isa} = %{version}-%{release}
