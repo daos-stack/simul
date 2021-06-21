@@ -26,7 +26,7 @@ Summary: "simul" is an MPI coordinated test of parallel filesystem system calls 
 License: GPLV2
 URL:     https://github.com/LLNL/simul/
 Source0: https://github.com/LLNL/%{name}/archive/refs/tags/%{version}.tar.gz
-
+Patch1: 0001-find-inline.patch
 
 %description
 "simul" is an MPI coordinated test of parallel filesystem system calls and
@@ -68,7 +68,7 @@ Simul for OpenMPI 3
 
 %prep
 %setup -q
-
+%patch1 -p1
 %build
 
 for mpi in %{?mpi_list}
