@@ -1,10 +1,18 @@
-%global daos_major 0
-
 %global with_mpich 1
+
+%if (0%{?rhel} >= 8)
+%global with_openmpi 1
+%global with_openmpi3 0
+%else
+%global with_openmpi 0
 %global with_openmpi3 1
+%endif
 
 %if %{with_mpich}
 %global mpi_list mpich
+%endif
+%if %{with_openmpi}
+%global mpi_list %{?mpi_list} openmpi
 %endif
 %if %{with_openmpi3}
 %global mpi_list %{?mpi_list} openmpi3
@@ -20,7 +28,7 @@
 
 Name:    simul
 Version: 1.16
-Release: 0%{?commit:.git%{shortcommit}}%{?dist}
+Release: 1%{?commit:.git%{shortcommit}}%{?dist}
 Summary: "simul" is an MPI coordinated test of parallel filesystem system calls and library functions.
 
 License: GPLV2
@@ -36,7 +44,7 @@ and coherence of parallel filesystems.
 
 %if %{with_mpich}
 %package mpich
-Summary: MACSio for MPICH
+Summary: Simul for MPICH
 %if "%{_host_vendor}" == "suse"
 BuildRequires: mpich-devel%{?_isa} lua-lmod
 %endif
@@ -44,11 +52,27 @@ BuildRequires: mpich-devel%{?_isa} lua-lmod
 BuildRequires: mpich-devel%{?_isa}
 %endif
 Requires: %{name}%{?_isa} = %{version}-%{release}
-Provides: %{name}-mpich2-daos-%{daos_major} = %{version}-%{release}
 
 %description mpich
 Simul for MPICH
 %endif
+
+%if %{with_openmpi}
+%package openmpi
+Summary: Simul for OpenMPI
+%if "%{_host_vendor}" == "suse"
+BuildRequires: openmpi-devel%{?_isa} lua-lmod
+%endif
+%if "%{_host_vendor}" == "redhat"
+BuildRequires: openmpi-devel%{?_isa}
+%endif
+Requires: %{name}%{?_isa} = %{version}-%{release}
+
+%description openmpi
+Simul for openmpi
+%endif
+
+
 
 %if %{with_openmpi3}
 %package openmpi3
@@ -60,15 +84,15 @@ BuildRequires: openmpi3-devel%{?_isa} lua-lmod
 BuildRequires: openmpi3-devel%{?_isa}
 %endif
 Requires: %{name}%{?_isa} = %{version}-%{release}
-Provides: %{name}-openmpi3-daos-%{daos_major} = %{version}-%{release}
 
 %description openmpi3
 Simul for OpenMPI 3
 %endif
 
 %prep
-%setup -q
-%patch1 -p1
+
+%autosetup -p1
+
 %build
 
 for mpi in %{?mpi_list}
@@ -90,16 +114,24 @@ do
 done
 
 %files
+
 %license COPYING
+
 %if %{with_mpich}
 %files mpich
 %{mpi_libdir}/mpich/bin/*
 %endif
+
+%if %{with_openmpi}
+%files openmpi
+%{mpi_libdir}/openmpi/bin/*
+%endif
+
 %if %{with_openmpi3}
 %files openmpi3
 %{mpi_libdir}/openmpi3/bin/*
 %endif
 
 %changelog
-* Tue Jun 08 2021 Omar Ocampo <omar.ocampo.coronado@intel.com> - 0.1
+* Wed Jun 23 2021 Omar Ocampo <omar.ocampo.coronado@intel.com> - $version-$release
 - Initial version
