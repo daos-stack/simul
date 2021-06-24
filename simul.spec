@@ -19,14 +19,14 @@
 %global mpi_list %{?mpi_list} openmpi3
 %endif
 
-%global source_vars() if [ "%{1}" == "mpich" ]; then source %{_libdir}/mpi/gcc/mpich/bin/mpivars.sh; elif [ "%{1}" == "openmpi3" ]; then source %{_libdir}/mpi/gcc/mpich/bin/mpivars.sh; else echo "no vars";fi
-
 %if (0%{?suse_version} >= 1500)
 %global module_load() if [ "%{1}" == "openmpi3" ]; then MODULEPATH=/usr/share/modules module load gnu-openmpi; else MODULEPATH=/usr/share/modules module load gnu-%{1}; fi
 %global mpi_libdir %{_libdir}/mpi/gcc
+%global source_vars() if [ "%{1}" == "mpich" ]; then source %{_libdir}/mpi/gcc/mpich/bin/mpivars.sh; elif [ "%{1}" == "openmpi3" ]; then source %{_libdir}/mpi/gcc/openmpi3/bin/mpivars.sh; else :;fi
 %else
 %global module_load() module load mpi/%{1}-%{_arch}
 %global mpi_libdir %{_libdir}
+%global source_vars() :;
 %endif
 
 Name:    simul
@@ -137,5 +137,5 @@ done
 %endif
 
 %changelog
-* Wed Jun 23 2021 Omar Ocampo <omar.ocampo.coronado@intel.com> - $version-$release
+* Thu Jun 24 2021 Omar Ocampo <omar.ocampo.coronado@intel.com> - $version-$release
 - Initial version
