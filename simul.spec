@@ -49,7 +49,7 @@ and coherence of parallel filesystems.
 %package mpich
 Summary: Simul for MPICH
 %if "%{_host_vendor}" == "suse"
-BuildRequires: mpich-devel%{?_isa} lua-lmod libfabric glibc
+BuildRequires: mpich-devel%{?_isa} lua-lmod libfabric-devel glibc
 %endif
 %if "%{_host_vendor}" == "redhat"
 BuildRequires: mpich-devel%{?_isa}
@@ -64,7 +64,7 @@ Simul for MPICH
 %package openmpi
 Summary: Simul for OpenMPI
 %if "%{_host_vendor}" == "suse"
-BuildRequires: openmpi-devel%{?_isa} lua-lmod libfabric glibc
+BuildRequires: openmpi-devel%{?_isa} lua-lmod libfabric-devel glibc
 %endif
 %if "%{_host_vendor}" == "redhat"
 BuildRequires: openmpi-devel%{?_isa}
