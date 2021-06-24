@@ -8,6 +8,7 @@
 %global with_openmpi3 1
 %endif
 
+
 %if %{with_mpich}
 %global mpi_list mpich
 %endif
@@ -17,6 +18,8 @@
 %if %{with_openmpi3}
 %global mpi_list %{?mpi_list} openmpi3
 %endif
+
+%global source_vars() if [ "%{1}" == "mpich" ]; then source %{_libdir}/mpi/gcc/mpich/bin/mpivars.sh; elif [ "%{1}" == "openmpi3" ]; then source %{_libdir}/mpi/gcc/mpich/bin/mpivars.sh; else echo "no vars";fi
 
 %if (0%{?suse_version} >= 1500)
 %global module_load() if [ "%{1}" == "openmpi3" ]; then MODULEPATH=/usr/share/modules module load gnu-openmpi; else MODULEPATH=/usr/share/modules module load gnu-%{1}; fi
@@ -99,6 +102,7 @@ for mpi in %{?mpi_list}
 do
     mkdir $mpi
     %module_load $mpi
+    %source_vars $mpi
     make simul
     mv simul $mpi/simul
     module purge
