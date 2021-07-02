@@ -47,11 +47,9 @@ and coherence of parallel filesystems.
 %if %{with_mpich}
 %package mpich
 Summary: Simul for MPICH
-%if (0%{?suse_version} > 0)
-BuildRequires: mpich-devel%{?_isa} lua-lmod libfabric-devel
+%if (0%{?suse_version} >= 1500)
+BuildRequires: lua-lmod libfabric-devel
 %endif
-%if (0%{?rhel} > 0)
-BuildRequires: mpich-devel%{?_isa}
 %endif
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
@@ -62,10 +60,10 @@ Simul for MPICH
 %if %{with_openmpi}
 %package openmpi
 Summary: Simul for OpenMPI
-%if (0%{?suse_version} > 0)
+%if (0%{?suse_version} >= 1500)
 BuildRequires: openmpi-devel%{?_isa} lua-lmod libfabric-devel
 %endif
-%if (0%{?rhel} > 0)
+%if (0%{?rhel} >= 7)
 BuildRequires: openmpi-devel%{?_isa}
 %endif
 Requires: %{name}%{?_isa} = %{version}-%{release}
@@ -79,10 +77,10 @@ Simul for openmpi
 %if %{with_openmpi3}
 %package openmpi3
 Summary: Simul for OpenMPI 3
-%if (0%{?suse_version} > 0)
+%if (0%{?suse_version} >= 1500)
 BuildRequires: openmpi3-devel%{?_isa} lua-lmod
 %endif
-%if (0%{?rhel} > 0)
+%if (0%{?rhel} >= 7)
 BuildRequires: openmpi3-devel%{?_isa}
 %endif
 Requires: %{name}%{?_isa} = %{version}-%{release}
@@ -135,5 +133,5 @@ done
 %endif
 
 %changelog
-* Mon Jun 28 2021 Omar Ocampo <omar.ocampo.coronado@intel.com> - 1.16-1
+* Fri Jul 02 2021 Omar Ocampo <omar.ocampo.coronado@intel.com> - 1.16-1
 - Initial version
