@@ -96,6 +96,7 @@ Simul for OpenMPI 3
 
 for mpi in %{?mpi_list}
 do
+    module spider
     mkdir $mpi
     %module_load $mpi
     make simul
