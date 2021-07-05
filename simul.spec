@@ -50,7 +50,6 @@ Summary: Simul for MPICH
 %if (0%{?suse_version} >= 1500)
 BuildRequires: lua-lmod libfabric-devel
 %endif
-%endif
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description mpich
