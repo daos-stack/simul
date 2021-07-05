@@ -50,6 +50,9 @@ Summary: Simul for MPICH
 %if (0%{?suse_version} >= 1500)
 BuildRequires: mpich-devel%{?_isa} lua-lmod libfabric-devel
 %endif
+%if (0%{?rhel} >= 7)
+BuildRequires: mpich-devel%{?_isa}
+%endif
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description mpich
@@ -96,7 +99,6 @@ Simul for OpenMPI 3
 
 for mpi in %{?mpi_list}
 do
-    module spider
     mkdir $mpi
     %module_load $mpi
     make simul
