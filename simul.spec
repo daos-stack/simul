@@ -47,7 +47,7 @@ and coherence of parallel filesystems.
 %if %{with_mpich}
 %package mpich
 Summary: Simul for MPICH
-BuildRequires: mpich-devel%{?_isa}
+BuildRequires: mpich%{?_isa}
 %if (0%{?suse_version} >= 1500)
 BuildRequires: lua-lmod libfabric-devel
 %endif
