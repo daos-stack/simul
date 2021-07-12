@@ -47,11 +47,9 @@ and coherence of parallel filesystems.
 %if %{with_mpich}
 %package mpich
 Summary: Simul for MPICH
-%if (0%{?suse_version} >= 1500)
-BuildRequires: mpich-devel%{?_isa} lua-lmod libfabric-devel
-%endif
-%if (0%{?rhel} >= 7)
 BuildRequires: mpich-devel%{?_isa}
+%if (0%{?suse_version} >= 1500)
+BuildRequires: lua-lmod libfabric-devel
 %endif
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
@@ -62,11 +60,9 @@ Simul for MPICH
 %if %{with_openmpi}
 %package openmpi
 Summary: Simul for OpenMPI
-%if (0%{?suse_version} >= 1500)
-BuildRequires: openmpi-devel%{?_isa} lua-lmod libfabric-devel
-%endif
-%if (0%{?rhel} >= 7)
 BuildRequires: openmpi-devel%{?_isa}
+%if (0%{?suse_version} >= 1500)
+BuildRequires: lua-lmod libfabric-devel
 %endif
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
@@ -79,11 +75,9 @@ Simul for openmpi
 %if %{with_openmpi3}
 %package openmpi3
 Summary: Simul for OpenMPI 3
-%if (0%{?suse_version} >= 1500)
-BuildRequires: openmpi3-devel%{?_isa} lua-lmod
-%endif
-%if (0%{?rhel} >= 7)
 BuildRequires: openmpi3-devel%{?_isa}
+%if (0%{?suse_version} >= 1500)
+BuildRequires: lua-lmod
 %endif
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
