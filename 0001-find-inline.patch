@@ -1,0 +1,11 @@
+diff --git a/Makefile b/Makefile
+index 7ae1552..8423e5d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,5 +1,5 @@
+ simul: simul.c
+-	mpicc -Wall -o simul simul.c
++	mpicc -Wall -O1 -o simul simul.c
+ 
+ aix: simul.c
+ 	mpicc -DAIX -o simul simul.c
