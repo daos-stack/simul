@@ -1,0 +1,5 @@
+# This line is mandatory to access the configuration functions
+from Config import *
+
+addFilter('simul\.x86_64: E: no-binary')
+addFilter(r'simul\.x86_64: W: incoherent-version-in-changelog .* \[\'.*\.suse\.lp[0-9]*\', \'.*\.suse\.lp[0-9]*\'\]')
