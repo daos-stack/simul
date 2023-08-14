@@ -30,10 +30,10 @@
 
 Name:    simul
 Version: 1.16
-Release: 1%{?commit:.git%{shortcommit}}%{?dist}
-Summary: "simul" is an MPI coordinated test of parallel filesystem system calls and library functions.
+Release: 2%{?commit:.git%{shortcommit}}%{?dist}
+Summary: MPI coordinated test of parallel filesystem system calls and library functions
 
-License: GPLV2
+License: GPL-2.0-only
 URL:     https://github.com/LLNL/simul/
 Source0: https://github.com/LLNL/%{name}/archive/refs/tags/%{version}.tar.gz
 Patch1: 0001-find-inline.patch
@@ -85,33 +85,33 @@ Simul for OpenMPI 3
 %endif
 
 %prep
-
 %autosetup -p1
+# use $CFLAGS in build
+sed -i -e 's/-O1/$(CFLAGS)/g' Makefile
+cat Makefile
+
 
 %build
-
-for mpi in %{?mpi_list}
-do
+for mpi in %{?mpi_list}; do
     mkdir $mpi
     %module_load $mpi
-    make simul
+    %{set_build_flags}
+    %make_build simul
     mv simul $mpi/simul
     module purge
 done
 
 %install
-for mpi in %{?mpi_list}
-do
+for mpi in %{?mpi_list}; do
     pushd $mpi
     install -d %{buildroot}/%{mpi_libdir}/$mpi/bin/
-    install -m 633 simul %{buildroot}/%{mpi_libdir}/$mpi/bin
+    install -m 755 simul %{buildroot}/%{mpi_libdir}/$mpi/bin
     popd
 done
 
 %files
-
 %license COPYING
-
+%doc README
 %if %{with_mpich}
 %files mpich
 %{mpi_libdir}/mpich/bin/*
@@ -128,5 +128,12 @@ done
 %endif
 
 %changelog
+* Tue Jul 04 2023 Brian J. Murrell <brian.murrell@intel.com> - 1.16-2
+- Use $CFLAGS in build
+- Add documentation to main package
+- Fix permissions of installed executable
+- Add %%{set_build_flags} and use %%{make_build}
+- Shorten Summary: and fix License:
+
 * Fri Jul 02 2021 Omar Ocampo <omar.ocampo.coronado@intel.com> - 1.16-1
 - Initial version
